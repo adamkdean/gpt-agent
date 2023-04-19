@@ -1,0 +1,19 @@
+{
+  "name": "gpt-agent",
+  "version": "0.0.1",
+  "description": "Simple task management library, leveraging GPT capabilities while abstracting away natural language complexities",
+  "keywords": [
+    "gpt-4",
+    "gpt",
+    "ai",
+    "agi"
+  ],
+  "author": "Adam K Dean <adamkdean@googlemail.com>",
+  "license": "GPL-3.0",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  }
+}
