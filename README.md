@@ -2,6 +2,8 @@
 
 Simple task management library, leveraging GPT capabilities while abstracting away natural language complexities
 
+[![github stars](https://img.shields.io/github/stars/adamkdean/gpt-agent)](https://github.com/adamkdean/gpt-agent) [![npm version](https://img.shields.io/npm/v/gpt-agent)](https://www.npmjs.com/package/gpt-agent) [![npm downloads](https://img.shields.io/npm/dt/gpt-agent)](https://www.npmjs.com/package/gpt-agent) [![license](https://img.shields.io/npm/l/gpt-agent)](LICENSE.md)
+
 ## Getting Started
 
 Install the module with: `npm install gpt-agent`
