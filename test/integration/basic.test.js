@@ -11,28 +11,28 @@ dotenv.config()
 // We'll store the paragraphs here
 const paragraphs = []
 
-// Create new agent instance, set the goal, and
-// add tasks to write some content and finish
+// Create new agent instance with explicit config
 const agent = new Agent({
   apiKey: process.env.OPENAI_API_KEY,
   model: 'gpt-3.5-turbo',
-  delay: 2500,
+  // delay: 2500,
   debug: true
 })
 
-// Set a basic goal
+// Set a goal for the agent
 agent.setGoal('Write 3 paragraphs about the history of the internet')
 
-// Add tasks to write a paragraph and finish
+// Add a task to the agent to write a paragraph
 agent.addTask('write_paragraph', (response, next) => {
-  console.log('write_paragraph', response)
+  console.log(`Paragraph ${paragraphs.length + 1} of 3 received.`)
   paragraphs.push(response)
   next()
 })
+
+// Add a task to the agent to finish (important!)
 agent.addTask('finish', () => {
-  console.log('Finished:')
-  console.log('---------')
-  console.log(paragraphs)
+  console.log('Finished!')
+  console.log(paragraphs.map((p, i) => `${i + 1}. ${p}`).join('\n'))
 })
 
 // Start the agent
