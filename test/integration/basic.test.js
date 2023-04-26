@@ -16,7 +16,8 @@ const paragraphs = []
 const agent = new Agent({
   apiKey: process.env.OPENAI_API_KEY,
   model: 'gpt-3.5-turbo',
-  delay: 2500
+  delay: 2500,
+  debug: true
 })
 
 // Set a basic goal

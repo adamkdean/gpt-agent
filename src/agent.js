@@ -5,17 +5,21 @@
 import { BasicChatAPI } from './chatapi.js'
 import { dedent, isValidJSON, sleep } from './utils.js'
 
+const defaultConfig = {
+  model: 'gpt-3.5-turbo',
+  delay: 0, // ms
+  debug: false
+}
+
 export class Agent {
   constructor(config) {
-    this.config = config
+    if (!config.apiKey) throw new Error('No OpenAI API key provided')
+
+    this.config = { ...defaultConfig, ...config }
     this.api = new BasicChatAPI(config.apiKey, config.model)
-    this.context = []
+    this.usage = { prompt: 0, completion: 0, total: 0 }
     this.tasks = new Map()
-    this.usage = {
-      prompt: 0,
-      completion: 0,
-      total: 0
-    }
+    this.context = []
   }
 
   setGoal(goal) {
@@ -24,6 +28,10 @@ export class Agent {
 
   addTask(task, callback) {
     this.tasks.set(task, callback)
+  }
+
+  log(message, ...args) {
+    if (this.config.debug) console.log(message, ...args)
   }
 
   async start() {
@@ -37,10 +45,10 @@ export class Agent {
 
   async continue(message) {
     this.context.push(message)
-    console.log('generating completion with context', this.context)
+    this.log('Generating completion with context', this.context)
     const response = await this.api.generateCompletion(this.context)
     if (this.config.delay) {
-      console.log(`Delaying for ${this.config.delay}ms`)
+      this.log(`Delaying for ${this.config.delay}ms`)
       await sleep(this.config.delay)
     }
     await this.parseResponse(response)
@@ -60,7 +68,7 @@ export class Agent {
   }
 
   async parseResponse(response) {
-    console.log('parseResponse', response)
+    this.log('parseResponse', response)
 
     const { content, tokens } = response
 
